@@ -9,10 +9,10 @@ class FormDialog {
         context: context,
         builder: (context) {
           return AlertDialog(
-            content: const TextField(
+            content: TextField(
                 autofocus: true,
-                decoration: InputDecoration(hintText: "ここに入力"),
-                onChanged: (editedText) {
+                decoration: const InputDecoration(hintText: "ここに入力"),
+                onChanged: (String editedText) {
                   text = editedText;
                 }),
             actions: <Widget>[

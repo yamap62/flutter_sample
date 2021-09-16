@@ -20,14 +20,11 @@ class Panel {
           minimumSize: Size(size, size),
         ),
         child: FutureBuilder(
-          future: _getText(x, y),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.hasData) {
+            future: _getText(x, y),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return Text(snapshot.data ?? "未入力",
                   style: const TextStyle(fontSize: 32));
-            }
-          },
-        ),
+            }),
         onPressed: () => _fillOutPanel(context, x, y),
       ),
     );
