@@ -12,14 +12,22 @@ class Panel {
     text = text;
   }
 
-  Future<Widget> build(context, x, y) async {
+  Widget build(context, x, y) {
     return Container(
       margin: const EdgeInsets.all(4),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(size, size),
         ),
-        child: Text(await _getText(x, y), style: const TextStyle(fontSize: 32)),
+        child: FutureBuilder(
+          future: _getText(x, y),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data ?? "未入力",
+                  style: const TextStyle(fontSize: 32));
+            }
+          },
+        ),
         onPressed: () => _fillOutPanel(context, x, y),
       ),
     );
