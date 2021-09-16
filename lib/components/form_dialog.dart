@@ -34,6 +34,7 @@ class FormDialog {
                 ),
                 onPressed: () async {
                   await _saveText(x, y);
+                  Navigator.pop(context);
                 },
                 child: const Text('OK'),
               ),
