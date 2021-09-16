@@ -3,7 +3,7 @@ import 'form_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Panel {
-  final double size = 92;
+  final double size = 135;
   late bool isMain = false;
   late String text = "";
   Panel({size, isMain, text}) {
@@ -14,16 +14,17 @@ class Panel {
 
   Widget build(context, x, y) {
     return Container(
-      margin: const EdgeInsets.all(4),
+      margin: const EdgeInsets.all(2),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(size, size),
+          maximumSize: Size(size, size),
         ),
         child: FutureBuilder(
             future: _getText(x, y),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return Text(snapshot.data ?? "未入力",
-                  style: const TextStyle(fontSize: 32));
+                  style: const TextStyle(fontSize: 20));
             }),
         onPressed: () => _fillOutPanel(context, x, y),
       ),
