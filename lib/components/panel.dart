@@ -1,8 +1,38 @@
+import 'package:flutter/material.dart';
+import 'form_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Panel {
-  final bool isMain = false;
-  final String text = "";
-  Panel({isMain, text}) {
+  final double size = 92;
+  late bool isMain = false;
+  late String text = "";
+  Panel({size, isMain, text}) {
+    size = size;
     isMain = isMain;
     text = text;
+  }
+
+  Future<Widget> build(context, x, y) async {
+    return Container(
+      margin: const EdgeInsets.all(4),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(size, size),
+        ),
+        child: Text(await _getText(x, y), style: const TextStyle(fontSize: 32)),
+        onPressed: () => _fillOutPanel(context, x, y),
+      ),
+    );
+  }
+
+  Future<String> _getText(x, y) async {
+    final key = '$x,$y';
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    text = prefs.getString(key) ?? text;
+    return text;
+  }
+
+  void _fillOutPanel(context, x, y) {
+    FormDialog.show(context, x, y);
   }
 }

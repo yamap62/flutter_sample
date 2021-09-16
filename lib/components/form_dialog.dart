@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late String text;
 
 class FormDialog {
-  static show(context) {
+  static show(context, x, y) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             content: const TextField(
-              autofocus: true,
-              decoration: InputDecoration(hintText: "ここに入力"),
-            ),
+                autofocus: true,
+                decoration: InputDecoration(hintText: "ここに入力"),
+                onChanged: (editedText) {
+                  text = editedText;
+                }),
             actions: <Widget>[
               // ignore: deprecated_member_use
               TextButton(
@@ -27,11 +32,19 @@ class FormDialog {
                   primary: Colors.blue,
                   textStyle: const TextStyle(fontSize: 20),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await _saveText(x, y);
+                },
                 child: const Text('OK'),
               ),
             ],
           );
         });
+  }
+
+  static _saveText(x, y) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final key = '$x,$y';
+    await prefs.setString(key, text);
   }
 }
